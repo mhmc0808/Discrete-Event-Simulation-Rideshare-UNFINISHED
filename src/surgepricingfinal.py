@@ -7,9 +7,6 @@ from scipy import stats as scs
 
 
 def trip_stats(loc1, loc2, coef, Time=False):
-    """
-    Determines distance and estimated time between two locations
-    """
     dist = math.sqrt((loc1[0] - loc2[0]) ** 2 + (loc1[1] - loc2[1]) ** 2)
     if Time:
         time = npr.uniform(coef["trip_time_lb"], coef["trip_time_ub"]) * dist / 20
@@ -120,6 +117,7 @@ def rider_awaiting_driver(drivers, rider_id, riders, TNOW, coef):
     return drivers, riders, surge
 
 
+# I don't know if driver is entering system correctly - something not working!
 def driver_enter_sys(drivers, next_driver_id, riders, TNOW, coef):
     """
     Adds a new driver to the system at TNOW
@@ -186,9 +184,6 @@ def rider_enter_sys(drivers, riders, next_rider_id, TNOW, coef):
     return drivers, riders, surge
 
 def ride_completion(drivers, driver_id, riders, kpi, TNOW, coef):
-    """
-    Update driver/rider stats after ride completion and append new KPI
-    """
     rider_id = drivers[driver_id]["current_rider"]
 
     kpi["waiting_times"].append(
@@ -207,9 +202,6 @@ def ride_completion(drivers, driver_id, riders, kpi, TNOW, coef):
     return drivers, riders, kpi
 
 def driver_offline(drivers, driver_id, kpi, TNOW):
-    """
-    Update driver KPIs when going offline
-    """
     kpi["avg_hourly_earnings"].append(
         float(drivers[driver_id]["total_earnings"] / (TNOW - drivers[driver_id]["shift_start"]))
     )
@@ -292,7 +284,7 @@ def simulate_boxcar(Termination, coef):
         next_driver_id += 1
         
     
-
+    # are we sure this is correct???
     while TNOW < Termination:
         EventCalendar[2], rc_driver_id = next_ride_completion(drivers, Termination)
         EventCalendar[3], off_driver_id = next_driver_offline(drivers, Termination)
@@ -319,10 +311,7 @@ def simulate_boxcar(Termination, coef):
             EventCalendar[0] = TNOW + npr.exponential(1 / arrival_rate)
 
         elif TypeNEXT == 1:
-            drivers, riders, surge = rider_enter_sys(drivers, riders, next_rider_id, TNOW, coef)
-            next_rider_id += 1
-            EventCalendar[1] = TNOW + npr.exponential(1 / coef["rider_arrival"])
-            kpi["total_number_riders"] += 1
+            # ADD CODE LOGIC HERE!
 
         elif TypeNEXT == 2:
             drivers, riders, kpi = ride_completion(drivers, rc_driver_id, riders, kpi, TNOW, coef)
