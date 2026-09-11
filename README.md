@@ -2,11 +2,8 @@
 
 Built a discrete-event simulation of "BoxCar", a fictional ride-sharing platform, to evaluate rider service quality and driver earnings, and to test whether the company's original operating assumptions matched its real operational data.
 
-**Result:** the original model assumptions substantially underestimated driver supply, understating real abandonment rates and waiting times. After recalibrating stochastic inputs to match empirical data, rider service improved but at the cost of driver oversupply and reduced earnings. A dynamic surge pricing mechanism designed to regulate driver supply achieved a balanced operating point: ~6% rider abandonment, ~17 minute mean waiting time, and ~£19.60/hour average driver earnings with an equitable earnings distribution (Gini coefficient 0.086).
 
-Collaborative project with Jackson Cramer and Michael Tiller. Full report is `Discrete_Event_Simulation_RideShare_Report.pdf`.
 
----
 
 ## Approach
 
